@@ -12,7 +12,7 @@ while [ keeplooping ]
 do
 	echo "Collecting data..."
 	read homeBaseSig <<< $( sudo iw wlan0 scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | awk 'match($2,"[0-9\-]+") { print substr($2,RSTART,RLENGTH)}')
-	if [ "$homeBaseSig" == "" ] && [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
+	if [ "$homeBaseSig" != "" ] && [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
 		if [ "$homeBaseInRange" == false  ]; then
 			arrivingAtHomeBase=true;
 		else
@@ -23,9 +23,9 @@ do
 	else
 		if [ "$homeBaseInRange" == true  ]; then
 			leavingHomeBase=true;
-                else
-                        leavingHomeBase=false;
-                fi
+		else
+				leavingHomeBase=false;
+		fi
 		arrivingAtHomeBase=false;
 		homeBaseInRange=false
 	fi
