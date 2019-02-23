@@ -1,6 +1,6 @@
 #!/bin/bash
 dirName=$1
-echo "Extract PMKIDs from .pcap file."
+echo "Extract data from .pcapng file."
 hcxpcaptool \
  -E $dirName/essid.txt \
  -I $dirName/identity_list.txt \

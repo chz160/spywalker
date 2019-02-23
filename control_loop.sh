@@ -11,8 +11,8 @@ homeBaseSigThreshold=-30
 while [ keeplooping ]
 do
 	echo "Collecting data..."
-	read homeBaseSig <<< $( sudo iw wlan0 scan | egrep 'SSID|signal' | egrep -B1 'jackstack' | awk 'match($2,"[0-9\-]+") {print substr($2,RSTART,RLENGTH)}')
-	if [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
+	read homeBaseSig <<< $( sudo iw wlan0 scan | egrep 'SSID|signal' | egrep -B1 '$homeBaseSsid' | awk 'match($2,"[0-9\-]+") { print substr($2,RSTART,RLENGTH)}')
+	if [ "$homeBaseSig" != "" ] && [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
 		if [ "$homeBaseInRange" == false  ]; then
 			arrivingAtHomeBase=true;
 		else
@@ -48,11 +48,12 @@ do
 		echo "Stopping capture..."
 		tmux send-keys -t walk.1 C-c
 		tmux send-keys -t walk.2 C-c
-		echo "Extract data from .pcapng file and move to network."
+		echo "Extract data from .pcapng file."
 		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "../extract.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "./extract.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		echo "Moving data to network location."
 		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "../move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "./move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
 	fi
 	sleep 30
 done
