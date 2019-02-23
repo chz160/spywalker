@@ -1,6 +1,6 @@
 #!/bin/bash
 homeBaseSsid=$1
-workingDir=$1
+workingDir=$2
 if test -f spywalker.conf ; then
 	. spywalker.conf
 fi
