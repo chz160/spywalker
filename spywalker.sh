@@ -5,8 +5,8 @@ if test -f spywalker.conf ; then
 	. spywalker.conf
 fi
 if [ homeBaseSsid == "" ]; then
-	echo "homeBaseSsid has no value. This must be set as a parameter or in spywalker.conf."
-	exit 1 >&2
+	echo "homeBaseSsid has no value. This must be set as a parameter or in spywalker.conf." 1>&2
+	exit 1
 fi
 session=walk
 window=${session}:0
