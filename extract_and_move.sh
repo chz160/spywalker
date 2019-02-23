@@ -1,7 +1,9 @@
 #!/bin/bash
 dirName=$1
 homeBaseSsid=$2
+extractedFilesDestination=$3
 cd $dirName
+
 echo "Extract PMKIDs from .pcap file."
 hcxpcaptool \
  -E essid.txt \
@@ -13,6 +15,11 @@ hcxpcaptool \
  -z pmkids.16800 \
  capture.pcapng
 cd ..
+
+# If no copy destination is set in the config file then end script early.
+if test "$extractedFilesDestination" == ""; then
+        exit 0
+fi
 
 echo "Checking for home base network..."
 ssid=""
@@ -28,15 +35,14 @@ while [ "$offline" == true ]; do
         fi
 done
 
-#echo "Copy to crusher.junkhole.local to be cracked."
-#scp local.16800 noah@192.168.1.8:/home/noah/local.16800
-
 echo "Mounting network location..."
 sudo mount -a
-sudo mkdir /mnt/tank/walks/
+if test ! -d "$extractedFilesDestination"; then
+        sudo mkdir $extractedFilesDestination        
+fi
 for d in walk_*
 do
 	echo "Moving $d..."
-	sudo mv /home/pi/$d /mnt/tank/walks/$d
+	sudo mv /home/pi/$d $extractedFilesDestination/$d
 done
 

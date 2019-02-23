@@ -1,12 +1,10 @@
 #!/bin/bash
 sysconfdir="/etc"
-homeBaseSsid=$1
-workingDir=$2
 if test -f ${sysconfdir}/default/spywalker.conf ; then
 	. ${sysconfdir}/default/spywalker.conf
 fi
 if [ "$homeBaseSsid" == "" ]; then
-	echo "homeBaseSsid has no value. This must be set as a parameter or in ${sysconfdir}/default/spywalker.conf." 1>&2
+	echo "homeBaseSsid has no value. This must be set in ${sysconfdir}/default/spywalker.conf." 1>&2
 	exit 1
 fi
 if [ "$workingDir" == "" ]; then
@@ -25,5 +23,5 @@ tmux new -s walk -d \; \
 	split-window -h \; \
 	select-pane -t 2 \; \
 	split-window -h \; \
-	send-keys -t 0 "./control_loop.sh $homeBaseSsid" C-m \;
+	send-keys -t 0 "./control_loop.sh $homeBaseSsid $extractedFilesDestination" C-m \;
 #tmux attach -t walk

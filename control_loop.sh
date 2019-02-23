@@ -1,5 +1,6 @@
 #!/bin/bash
 homeBaseSsid=$1
+extractedFilesDestination=$2
 dirName=""
 keeplooping=true
 homeBaseInRange=true
@@ -46,7 +47,7 @@ do
 		tmux send-keys -t walk.1 C-c
 		tmux send-keys -t walk.2 C-c
 		echo "Extract data from .pcapng file and move to network."
-		tmux send-keys -t walk.3 "./extract_and_move.sh $dirName $homeBaseSsid" C-m
+		tmux send-keys -t walk.3 "./extract_and_move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
 	fi
 	sleep 30
 done
