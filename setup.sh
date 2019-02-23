@@ -1,4 +1,12 @@
 #!/bin/bash
+sudo cp -n spywalker.conf.default /ect/default/spywalker.conf
+chmod u+x spywalker.sh
+chmod u+x control_loop.sh
+chmod u+x capture_hcxdump.sh
+chmod u+x capture_kismet.sh
+chmod u+x extract.sh
+chmod u+x move.sh
+
 echo "Update APT"
 sudo apt-get update
 echo "Installing Dependencys"
