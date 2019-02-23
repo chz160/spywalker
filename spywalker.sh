@@ -8,7 +8,8 @@ if [ "$homeBaseSsid" == "" ]; then
 	exit 1
 fi
 if [ "$workingDir" == "" ]; then
-	workingDir="$PWD"
+	echo "workingDir has no value. This must be set in ${sysconfdir}/default/spywalker.conf." 1>&2
+	exit 1
 fi
 session=walk
 window=${session}:0
@@ -23,5 +24,5 @@ tmux new -s walk -d \; \
 	split-window -h \; \
 	select-pane -t 2 \; \
 	split-window -h \; \
-	send-keys -t 0 "./control_loop.sh $homeBaseSsid $extractedFilesDestination" C-m \;
+	send-keys -t 0 "./control_loop.sh $homeBaseSsid $workingDir $extractedFilesDestination" C-m \;
 #tmux attach -t walk

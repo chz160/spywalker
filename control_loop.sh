@@ -1,6 +1,7 @@
 #!/bin/bash
 homeBaseSsid=$1
-extractedFilesDestination=$2
+workingDir=$2
+extractedFilesDestination=$3
 dirName=""
 keeplooping=true
 homeBaseInRange=true
@@ -35,19 +36,23 @@ do
 	echo "arrivingAtHomeBase: $arrivingAtHomeBase"
 	echo "--------------------------------------------------"
 	if [ "$homeBaseInRange" == false ] && [ "$leavingHomeBase" == true ]; then
-		echo "TODO: turn off bluetooth radio."
+#		"TODO: turn off bluetooth radio."
 		echo "Starting capture..."
 		dirName=walk_$(date +%Y%m%d%H%M%S)
-		tmux send-keys -t walk.1 "./capture_hcxdump.sh $dirName" C-m
-		tmux send-keys -t walk.2 "./capture_kismet.sh $dirName" C-m
+		mkdir $dirName
+		tmux send-keys -t walk.1 "cd $workingDir/$dirName; ../capture_hcxdump.sh" C-m
+		tmux send-keys -t walk.2 "cd $workingDir/$dirName; ../capture_kismet.sh" C-m
 	fi
 	if [ "$homeBaseInRange" == true ] && [ "$arrivingAtHomeBase" == true ]; then
-		echo "TODO: Turn on bluetooth radio."
+#		"TODO: Turn on bluetooth radio."
 		echo "Stopping capture..."
 		tmux send-keys -t walk.1 C-c
 		tmux send-keys -t walk.2 C-c
 		echo "Extract data from .pcapng file and move to network."
-		tmux send-keys -t walk.3 "./extract_and_move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "cd $workingDir" C-m
+		tmux send-keys -t walk.3 "../extract.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "cd $workingDir" C-m
+		tmux send-keys -t walk.3 "../move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
 	fi
 	sleep 30
 done

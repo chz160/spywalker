@@ -2,19 +2,6 @@
 dirName=$1
 homeBaseSsid=$2
 extractedFilesDestination=$3
-cd $dirName
-
-echo "Extract PMKIDs from .pcap file."
-hcxpcaptool \
- -E essid.txt \
- -I identity_list.txt \
- -U username_list.txt \
- -P plainmasterkey_list.txt \
- -T traffic_info.txt \
- -g gps.txt \
- -z pmkids.16800 \
- capture.pcapng
-cd ..
 
 # If no copy destination is set in the config file then end script early.
 if test "$extractedFilesDestination" == ""; then
@@ -43,6 +30,5 @@ fi
 for d in walk_*
 do
 	echo "Moving $d..."
-	sudo mv /home/pi/$d $extractedFilesDestination/$d
+	sudo mv $d $extractedFilesDestination/$d
 done
-
