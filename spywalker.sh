@@ -1,11 +1,12 @@
 #!/bin/bash
+sysconfdir="/etc"
 homeBaseSsid=$1
 workingDir=$2
-if test -f spywalker.conf ; then
-	. spywalker.conf
+if test -f ${sysconfdir}/default/spywalker.conf ; then
+	. ${sysconfdir}/default/spywalker.conf
 fi
 if [ "$homeBaseSsid" == "" ]; then
-	echo "homeBaseSsid has no value. This must be set as a parameter or in spywalker.conf." 1>&2
+	echo "homeBaseSsid has no value. This must be set as a parameter or in ${sysconfdir}/default/spywalker.conf." 1>&2
 	exit 1
 fi
 if [ "$workingDir" == "" ]; then
