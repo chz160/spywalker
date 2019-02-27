@@ -1,4 +1,5 @@
 #!/bin/bash
+. /etc/default/spywalker.conf
 dirName=$1
 echo "Extract data from .pcapng file."
 hcxpcaptool \

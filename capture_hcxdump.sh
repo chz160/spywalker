@@ -1,12 +1,13 @@
 #!/bin/bash
-wlanInterfaceName=wlan1
-read monInterfaceName <<< $(sudo ifconfig | awk 'match($1,"wlan1mon") {print substr($1,RSTART,RLENGTH)}')
+. /etc/default/spywalker.conf
+#wlanInterfaceName=${hcxdumpInterface}
+read monInterfaceName <<< $(sudo ifconfig | awk 'match($1,"${hcxdumpInterface}mon") {print substr($1,RSTART,RLENGTH)}')
 if [ -z "$monInterfaceName" ]
 then
 	echo "Killing troublesome processes..."
 	sudo airmon-ng check kill
-        echo "Creating monitor interface on $wlanInterfaceName..."
-        sudo airmon-ng start $wlanInterfaceName
+        echo "Creating monitor interface on ${hcxdumpInterface}..."
+        sudo airmon-ng start ${hcxdumpInterface}
 	read monInterfaceName <<< $(ifconfig | awk 'match($1,"wlan1mon") {print substr($1,RSTART,RLENGTH)}')
 else
         echo "Monitor interface already exists as: $monInterfaceName"

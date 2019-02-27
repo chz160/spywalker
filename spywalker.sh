@@ -1,14 +1,18 @@
 #!/bin/bash
-sysconfdir="/etc"
-if test -f ${sysconfdir}/default/spywalker.conf ; then
-	. ${sysconfdir}/default/spywalker.conf
+confDir="/etc/default/spywalker.conf"
+if test -f ${confDir} ; then
+	. ${confDir}
+else
+	echo "$confDir could not be found. Please make sure it exists and you update it with your configuration." 1>&2
+	exit 1
 fi
+
 if [ "$homeBaseSsid" == "" ]; then
-	echo "homeBaseSsid has no value. This must be set in ${sysconfdir}/default/spywalker.conf." 1>&2
+	echo "homeBaseSsid has no value. This must be set in $confDir." 1>&2
 	exit 1
 fi
 if [ "$workingDir" == "" ]; then
-	echo "workingDir has no value. This must be set in ${sysconfdir}/default/spywalker.conf." 1>&2
+	echo "workingDir has no value. This must be set in $confDir." 1>&2
 	exit 1
 fi
 session=walk

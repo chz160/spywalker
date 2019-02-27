@@ -1,7 +1,6 @@
 #!/bin/bash
+. /etc/default/spywalker.conf
 dirName=$1
-homeBaseSsid=$2
-extractedFilesDestination=$3
 
 # If no copy destination is set in the config file then end script early.
 if test "$extractedFilesDestination" == ""; then

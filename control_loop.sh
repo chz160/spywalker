@@ -1,7 +1,8 @@
 #!/bin/bash
-homeBaseSsid=$1
-workingDir=$2
-extractedFilesDestination=$3
+. /etc/default/spywalker.conf
+#homeBaseSsid=$1
+#workingDir=$2
+#extractedFilesDestination=$3
 dirName=""
 keeplooping=true
 homeBaseInRange=true
@@ -11,7 +12,7 @@ homeBaseSigThreshold=-30
 while [ keeplooping ]
 do
 	echo "Collecting data..."
-	read homeBaseSig <<< $( sudo iw wlan0 scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | awk 'match($2,"[0-9\-]+") { print substr($2,RSTART,RLENGTH)}')
+	read homeBaseSig <<< $( sudo iw ${kistmetInterface} scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | awk 'match($2,"[0-9\-]+") { print substr($2,RSTART,RLENGTH)}')
 	if [ "$homeBaseSig" != "" ] && [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
 		if [ "$homeBaseInRange" == false  ]; then
 			arrivingAtHomeBase=true;
@@ -50,10 +51,10 @@ do
 		tmux send-keys -t walk.2 C-c
 		echo "Extract data from .pcapng file."
 		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "./extract.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "./extract.sh $dirName" C-m
 		echo "Moving data to network location."
 		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "./move.sh $dirName $homeBaseSsid $extractedFilesDestination" C-m
+		tmux send-keys -t walk.3 "./move.sh $dirName" C-m
 	fi
 	sleep 30
 done

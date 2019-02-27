@@ -7,9 +7,9 @@ chmod u+x capture_kismet.sh
 chmod u+x extract.sh
 chmod u+x move.sh
 
-echo "Update APT"
+echo "Update APT..."
 sudo apt-get update
-echo "Installing Dependencys"
+echo "Installing Dependencys..."
 sudo apt-get install -y tmux timeout
 sudo apt-get install -y libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver
 sudo apt-get install -y libnl-3-dev libnl-genl-3-dev
@@ -53,37 +53,46 @@ sudo make install
 cd ..
 
 echo "Cloning and building Aircrack-ng..."
-git clone https://github.com/aircrack-ng/aircrack-ng.git
+sudo git clone https://github.com/aircrack-ng/aircrack-ng.git
 cd aircrack-ng/
-make sqlite=true
-make sqlite=true install
+sudo make sqlite=true
+sudo make sqlite=true install
 cd ..
 
 echo "Cloning and building hcxtools..."
-git clone https://github.com/ZerBea/hcxtools.git
+sudo git clone https://github.com/ZerBea/hcxtools.git
 cd hcxtools/
-make
+sudo make
 sudo make install
 cd ..
 
 echo "Cloning and building hcxdumptools..."
-git clone https://github.com/ZerBea/hcxdumptool.git
+sudo git clone https://github.com/ZerBea/hcxdumptool.git
 cd hcxdumptool/
-make
+sudo make
 sudo make install
 cd ..
 
-rm -rf hcxdumptool hcxtools aircrack-ng kismet-2016-07-R1 kismetanalyzer PacketQ # cleaning up
+echo "Cloning and building driver for TP-Link T2UH Wireless Adapter..."
+sudo apt-get install raspberrypi-kernel-headers
+sudo git clone https://github.com/ulli-kroll/mt7610u.git
+cd mt7610u
+sudo make
+sudo cp firmware/*  /lib/firmware
+sudo insmod mt7610u.ko
+
+sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet-2016-07-R1 kismetanalyzer PacketQ mt7610u # cleaning up
+cd ~
 
 sudo airodump-ng-oui-update
-cd scripts
-chmod +x airmon-ng
-cp airmon-ng /usr/bin/airmon-ng
-cd ~/
-echo "Grabbing Airoscript From SVN"
-sudo svn co http://svn.aircrack-ng.org/branch/airoscript-ng/ airoscript-ng
-cd airoscript-ng
-sudo make
+#cd scripts
+#chmod +x airmon-ng
+#cp airmon-ng /usr/bin/airmon-ng
+#cd ~/
+# echo "Grabbing Airoscript From SVN"
+# sudo svn co http://svn.aircrack-ng.org/branch/airoscript-ng/ airoscript-ng
+# cd airoscript-ng
+# sudo make
 
 cd ~/
 
