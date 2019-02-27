@@ -1,4 +1,4 @@
 #!/bin/bash
 . /etc/default/spywalker.conf
-sudo kismet_server
+sudo kismet -c ${kismetInterface}
   

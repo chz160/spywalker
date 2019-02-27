@@ -26,11 +26,13 @@ sudo apt-get install libxml-libxml-perl libdbi-perl libdbd-sqlite3-perl
 
 echo "Downloading and building Kismet..."
 cd /usr/local/src
-sudo wget http://www.kismetwireless.net/code/kismet-2016-07-R1.tar.xz
-sudo tar -xvf kismet-2016-07-R1.tar.xz
-cd kismet-2016-07-R1/
+sudo git clone https://github.com/kismetwireless/kismet.git
+cd kismet/
+#sudo wget http://www.kismetwireless.net/code/kismet-2016-07-R1.tar.xz
+#sudo tar -xvf kismet-2016-07-R1.tar.xz
+#cd kismet-2016-07-R1/
 sudo ./configure
-sudo make dep
+#sudo make dep
 sudo make
 sudo make suidinstall
 sudo usermod -aG kismet $USER
@@ -81,7 +83,7 @@ sudo make
 sudo cp firmware/*  /lib/firmware
 sudo insmod mt7610u.ko
 
-sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet-2016-07-R1 kismetanalyzer PacketQ mt7610u # cleaning up
+sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet kismetanalyzer PacketQ mt7610u # cleaning up
 cd ~
 
 sudo airodump-ng-oui-update

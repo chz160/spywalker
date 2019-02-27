@@ -2,4 +2,4 @@ homeBaseSsid=
 workingDir=
 extractedFilesDestination=
 hcxdumpInterface=
-kistmetInterface=
+kismetInterface=
