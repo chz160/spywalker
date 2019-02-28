@@ -106,6 +106,10 @@ make install-firmware
 cd /usr/local/src/nexmon/utilities/nexutil/
 make
 make install
+apt-get remove wpasupplicant
+mv "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko" "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko.orig"
+cp /usr/local/src/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/"
+depmod -a
 exit
 
 
