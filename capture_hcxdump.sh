@@ -8,7 +8,7 @@ then
 	sudo airmon-ng check kill
         echo "Creating monitor interface on ${hcxdumpInterface}..."
         sudo airmon-ng start ${hcxdumpInterface}
-	read monInterfaceName <<< $(ifconfig | awk 'match($1,"wlan1mon") {print substr($1,RSTART,RLENGTH)}')
+	read monInterfaceName <<< $(ifconfig | awk 'match($1,"${hcxdumpInterface}mon") {print substr($1,RSTART,RLENGTH)}')
 else
         echo "Monitor interface already exists as: $monInterfaceName"
 fi
