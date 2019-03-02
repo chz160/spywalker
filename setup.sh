@@ -84,34 +84,33 @@ sudo cp firmware/*  /lib/firmware
 sudo insmod mt7610u.ko
 cd ..
 
-echo ""
-sudo su
-sudo apt install raspberrypi-kernel-headers git libgmp3-dev gawk qpdf bison flex make
-git clone https://github.com/seemoo-lab/nexmon.git
-cd nexmon
-if test ! -f /usr/lib/arm-linux-gnueabihf/libisl.so.10 ; then
-    cd buildtools/isl-0.10
-    ./configure
-    make
-    make install
-    ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
-fi
-cd /usr/local/src/nexmon/
-source setup_env.sh
-make
-cd patches/bcm43430a1/7_45_41_46/nexmon/
-make
-make backup-firmware
-make install-firmware
-cd /usr/local/src/nexmon/utilities/nexutil/
-make
-make install
-apt-get remove wpasupplicant
-mv "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko" "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko.orig"
-cp /usr/local/src/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/"
-depmod -a
-exit
-
+# echo ""
+# sudo su
+# sudo apt install raspberrypi-kernel-headers git libgmp3-dev gawk qpdf bison flex make
+# git clone https://github.com/seemoo-lab/nexmon.git
+# cd nexmon
+# if test ! -f /usr/lib/arm-linux-gnueabihf/libisl.so.10 ; then
+#     cd buildtools/isl-0.10
+#     ./configure
+#     make
+#     make install
+#     ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
+# fi
+# cd /usr/local/src/nexmon/
+# source setup_env.sh
+# make
+# cd patches/bcm43430a1/7_45_41_46/nexmon/
+# make
+# make backup-firmware
+# make install-firmware
+# cd /usr/local/src/nexmon/utilities/nexutil/
+# make
+# make install
+# apt-get remove wpasupplicant
+# mv "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko" "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko.orig"
+# cp /usr/local/src/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko "/lib/modules/4.14.98+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/"
+# depmod -a
+# exit
 
 sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet kismetanalyzer PacketQ mt7610u # cleaning up
 cd ~

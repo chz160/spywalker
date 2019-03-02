@@ -1,5 +1,6 @@
 homeBaseSsid=
 workingDir=
 extractedFilesDestination=
+onboardInterface=
 hcxdumpInterface=
 kismetInterface=

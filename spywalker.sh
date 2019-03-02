@@ -6,13 +6,30 @@ else
 	echo "$confDir could not be found. Please make sure it exists and you update it with your configuration." 1>&2
 	exit 1
 fi
-
 if [ "$homeBaseSsid" == "" ]; then
 	echo "homeBaseSsid has no value. This must be set in $confDir." 1>&2
 	exit 1
 fi
 if [ "$workingDir" == "" ]; then
 	echo "workingDir has no value. This must be set in $confDir." 1>&2
+	exit 1
+fi
+if [ "$onboardInterface" == "" ]; then
+	echo "onboardInterface has no value. This must be set in $confDir." 1>&2
+	exit 1
+fi
+if [ "$hcxdumpInterface" == "" ]; then
+	echo "hcxdumpInterface has no value. This must be set in $confDir." 1>&2
+	exit 1
+fi
+if [ "$kismetInterface" == "" ]; then
+	echo "onboardInterface has no value. This must be set in $confDir." 1>&2
+	exit 1
+fi
+if [ "$onboardInterface" == "$hcxdumpInterface" ] ||
+   [ "$onboardInterface" == "$kismetInterface" ] ||
+   [ "$hcxdumpInterface" == "$kismetInterface" ]; then
+	echo "For spywalker to work correctly you must have 3 seperate wireless interfaces, and they must be configured in $confDir. onboardInterface, hcxdumpInterface, and kismetInterface must all be different interfaces." 1>&2
 	exit 1
 fi
 session=walk
@@ -28,5 +45,5 @@ tmux new -s walk -d \; \
 	split-window -h \; \
 	select-pane -t 2 \; \
 	split-window -h \; \
-	send-keys -t 0 "./control_loop.sh $homeBaseSsid $workingDir $extractedFilesDestination" C-m \;
+	send-keys -t 0 "./control_loop.sh" C-m \;
 #tmux attach -t walk
