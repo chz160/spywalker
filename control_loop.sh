@@ -9,6 +9,10 @@ homeBaseInRange=true
 leavingHomeBase=false
 arrivingAtHomeBase=false
 homeBaseSigThreshold=-40
+
+echo "Killing troublesome processes..."
+sudo airmon-ng check kill
+
 while [ keeplooping ]
 do
 	echo "Collecting data..."
