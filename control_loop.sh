@@ -8,7 +8,7 @@ keeplooping=true
 homeBaseInRange=true
 leavingHomeBase=false
 arrivingAtHomeBase=false
-homeBaseSigThreshold=-30
+homeBaseSigThreshold=-40
 while [ keeplooping ]
 do
 	echo "Collecting data..."
