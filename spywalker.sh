@@ -49,5 +49,5 @@ tmux new -s walk -d \; \
 	split-window -v \; \
 	send-keys -t 3 "./online_status.sh" C-m \; \
 	send-keys -t 0 "./control_loop.sh" C-m \; \
-	select-pane -t 4/;
+	select-pane -t 4 \;
 #tmux attach -t walk
