@@ -38,22 +38,6 @@ sudo make suidinstall
 sudo usermod -aG kismet $USER
 cd ..
 
-sudo git clone https://bitbucket.org/cbless/kismetanalyzer.git
-cd kismetanalyzer/
-sudo pip install -r requirements.txt
-sudo python setup.py install
-cd ..
-
-echo "Cloning and building PacketQ..."
-sudo apt-get install -y zlib1g-dev automake
-sudo git clone https://github.com/DNS-OARC/PacketQ.git
-cd PacketQ/
-sudo sh autogen.sh
-sudo ./configure
-sudo make
-sudo make install
-cd ..
-
 echo "Cloning and building Aircrack-ng..."
 sudo git clone https://github.com/aircrack-ng/aircrack-ng.git
 cd aircrack-ng/
@@ -75,13 +59,14 @@ sudo make
 sudo make install
 cd ..
 
-echo "Cloning and building driver for TP-Link T2UH Wireless Adapter..."
+echo "Cloning and building driver for rtl8188eus drivers..."
 sudo apt-get install raspberrypi-kernel-headers
-sudo git clone https://github.com/ulli-kroll/mt7610u.git
-cd mt7610u
+sudo git clone https://github.com/kimocoder/rtl8188eus.git
+cd rtl8188eus
+sudo cp realtek_blacklist.conf /etc/modprobe.d/
 sudo make
-sudo cp firmware/*  /lib/firmware
-sudo insmod mt7610u.ko
+sudo make install
+sudo rmmod 8188eu && insmod 8188eu.ko
 cd ..
 
 # echo ""
@@ -112,7 +97,7 @@ cd ..
 # depmod -a
 # exit
 
-sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet kismetanalyzer PacketQ mt7610u # cleaning up
+sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet rtl8188eus # cleaning up
 cd ~
 
 sudo airodump-ng-oui-update
