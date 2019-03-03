@@ -4,7 +4,7 @@ echo "Checking for home base network..."
 while true
 do
 	ssid=$(iw $onboardInterface link | grep ssid)
-    if [ -z "$ssid" ] || [ "$ssid" != "$homeBaseSsid" ]; then
+    if [ "$ssid" != "$homeBaseSsid" ]; then
         ifdown --force $onboardInterface
         ifup $onboardInterface
         sleep 5
