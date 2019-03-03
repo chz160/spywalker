@@ -10,7 +10,7 @@ chmod u+x move.sh
 echo "Update APT..."
 sudo apt-get update
 echo "Installing Dependencys..."
-sudo apt-get install -y tmux timeout
+sudo apt-get install -y tmux timeout bc
 sudo apt-get install -y libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver
 sudo apt-get install -y libnl-3-dev libnl-genl-3-dev
 sudo apt-get install -y libcurl4-openssl-dev zlib1g-dev libpcap-dev

@@ -17,7 +17,7 @@ while [ keeplooping ]
 do
 	echo "Collecting data..."
 	read homeBaseSig <<< $( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
-	if [ "$homeBaseSig" != "" ] && [ "$homeBaseSig" -ge "$homeBaseSigThreshold" ]; then
+	if [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > $homeBaseSigThreshold"|bc -l) )); then
 		if [ "$homeBaseInRange" == false  ]; then
 			arrivingAtHomeBase=true;
 		else
