@@ -13,9 +13,9 @@
 #         echo "Monitor interface already exists as: $monKismetInterface"
 # fi
 
-ip link set $kismetInterface down
-iw dev $kismetInterface set type monitor
-ip link set $kismetInterface up
+sudo ip link set $kismetInterface down
+sudo iw dev $kismetInterface set type monitor
+sudo ip link set $kismetInterface up
 
 #sudo airmon-ng start ${monKismetInterface}
 echo "$kismetInterface interface set to monitor mode, starting dump..."
