@@ -6,6 +6,7 @@ chmod u+x capture_hcxdump.sh
 chmod u+x capture_kismet.sh
 chmod u+x extract.sh
 chmod u+x move.sh
+chmod u+x online_status.sh
 
 echo "Update APT..."
 sudo apt-get update

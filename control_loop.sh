@@ -49,16 +49,16 @@ do
 		tmux send-keys -t walk.2 "cd $workingDir/$dirName; ../capture_kismet.sh" C-m
 	fi
 	if [ "$homeBaseInRange" == true ] && [ "$arrivingAtHomeBase" == true ]; then
-#		"TODO: Turn on bluetooth radio."
+		"TODO: Turn on bluetooth radio."
 		echo "Stopping capture..."
 		tmux send-keys -t walk.1 C-c
 		tmux send-keys -t walk.2 C-c
 		echo "Extract data from .pcapng file."
-		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "./extract.sh $dirName" C-m
+		tmux send-keys -t walk.4 "cd $workingDir" C-m
+		tmux send-keys -t walk.4 "./extract.sh $dirName" C-m
 		echo "Moving data to network location."
-		tmux send-keys -t walk.3 "cd $workingDir" C-m
-		tmux send-keys -t walk.3 "./move.sh $dirName" C-m
+		tmux send-keys -t walk.4 "cd $workingDir" C-m
+		tmux send-keys -t walk.4 "./move.sh $dirName" C-m
 	fi
 	sleep 30
 done

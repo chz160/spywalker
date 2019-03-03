@@ -38,6 +38,7 @@ pane1=${window}.0
 pane2=${window}.1
 pane3=${window}.2
 pane4=${window}.3
+pane5=${window}.4
 cd $workingDir
 tmux new -s walk -d \; \
 	split-window -v \; \
@@ -45,5 +46,8 @@ tmux new -s walk -d \; \
 	split-window -h \; \
 	select-pane -t 2 \; \
 	split-window -h \; \
-	send-keys -t 0 "./control_loop.sh" C-m \;
+	split-window -v \; \
+	send-keys -t 3 "./online_status.sh" C-m \; \
+	send-keys -t 0 "./control_loop.sh" C-m \; \
+	select-pane -t 4/;
 #tmux attach -t walk
