@@ -3,15 +3,16 @@
 echo "Checking for home base network..."
 while true
 do
-	ssid=$(iw $onboardInterface link | grep ssid)
-    if [ "$ssid" != "$homeBaseSsid" ]; then
+    homeBaseSig=$( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
+	activeSsid=$(iw $onboardInterface link | grep ssid)
+    if [ "$activeSsid" != "$homeBaseSsid" ] && [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > 0"|bc -l) )); then
         ifdown --force $onboardInterface
         ifup $onboardInterface
         sleep 5
-        ssid=$(iw $onboardInterface link | grep ssid)
+        activeSsid=$(iw $onboardInterface link | grep ssid)
     fi
     wget -q --tries=10 --timeout=20 --spider http://google.com
-    if [ $? -eq 0 ] && [ "$ssid" == "$homeBaseSsid" ]; then
+    if [ $? -eq 0 ] && [ "$activeSsid" == "$homeBaseSsid" ]; then
         echo "Connected to homebase wifi."
     else
         echo "Disconnected from homebase wifi."
