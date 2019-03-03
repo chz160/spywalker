@@ -5,6 +5,8 @@ while true
 do
     homeBaseSig=$( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
 	activeSsid=$(iw $onboardInterface link | grep ssid)
+    echo "homeBaseSig: $homeBaseSig"
+    echo "activeSsid: $activeSsid"
     if [ "$activeSsid" != "$homeBaseSsid" ] && [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > 0"|bc -l) )); then
         ifdown --force $onboardInterface
         ifup $onboardInterface
