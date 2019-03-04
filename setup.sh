@@ -17,18 +17,19 @@ apt-get update
 echo -e "\e[32mInstalling Dependencys...\e[0m"
 #For Aircrack
 apt-get install -y \
-    tmux timeout bc build-essential raspberrypi-kernel-headers \
-    libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver \
-    install -y libnl-3-dev libnl-genl-3-dev \
-    libcurl4-openssl-dev zlib1g-dev libpcap-dev \;
+    tmux coreutils bc build-essential raspberrypi-kernel-headers \
+    libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver;
+apt-get install -y libnl-3-dev libnl-genl-3-dev \
+    libcurl4-openssl-dev zlib1g-dev libpcap-dev
 #For GPS
 apt-get install -y gpsd libncurses5-dev tcpdump gpsd-clients python-gps
 #For Kismet
 apt-get install -y \
-    libmicrohttpd-dev pkg-config libcap-dev libnm-dev libdw-dev libprotobuf-dev \
-    libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev
-    python python-setuptools python-protobuf python-requests python-pip \
-    librtlsdr0 python-usb \;
+    libmicrohttpd-dev pkg-config libcap-dev libnm-dev libdw-dev \
+    libprotobuf-dev libprotobuf-c-dev protobuf-compiler \
+    protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev python \
+    python-setuptools python-protobuf python-requests python-pip \
+    librtlsdr0 python-usb;
 pip install paho-mqtt
 
 echo -e "\e[32mDownloading and building Kismet...\e[0m"
