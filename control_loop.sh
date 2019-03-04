@@ -45,7 +45,7 @@ do
 		echo "Starting capture..."
 		dirName=walk_$(date +%Y%m%d%H%M%S)
 		mkdir $dirName
-		tmux send-keys -t walk.1 "cd $workingDir/$dirName; ../capture_hcxdump.sh" C-m
+		timeout 10s tmux send-keys -t walk.1 "cd $workingDir/$dirName; ../capture_hcxdump.sh" C-m
 		tmux send-keys -t walk.2 "cd $workingDir/$dirName; ../capture_kismet.sh" C-m
 	fi
 	if [ "$homeBaseInRange" == true ] && [ "$arrivingAtHomeBase" == true ]; then
