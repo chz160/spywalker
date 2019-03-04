@@ -17,15 +17,19 @@ apt-get update
 echo -e "\e[32mInstalling Dependencys...\e[0m"
 #For Aircrack
 apt-get install -y \
-    tmux coreutils bc build-essential raspberrypi-kernel-headers \
-    libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver;
-apt-get install -y libnl-3-dev libnl-genl-3-dev \
-    libcurl4-openssl-dev zlib1g-dev libpcap-dev
+    tmux coreutils bc iw raspberrypi-kernel-headers \
+    build-essential autoconf automake libtool pkg-config \
+    libnl-3-dev libnl-genl-3-dev libssl-dev ethtool shtool \
+    rfkill libcurl4-openssl-dev zlib1g-dev libpcap-dev \
+    libsqlite3-dev libpcre3-dev libhwloc-dev libcmocka-dev \
+    hostapd tcpdump screen    
+
 #For GPS
-apt-get install -y gpsd libncurses5-dev tcpdump gpsd-clients python-gps
+apt-get install -y gpsd libncurses5-dev gpsd-clients python-gps
+
 #For Kismet
 apt-get install -y \
-    libmicrohttpd-dev pkg-config libcap-dev libnm-dev libdw-dev \
+    libmicrohttpd-dev libcap-dev libnm-dev libdw-dev \
     libprotobuf-dev libprotobuf-c-dev protobuf-compiler \
     protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev python \
     python-setuptools python-protobuf python-requests python-pip \
@@ -45,8 +49,11 @@ cd ..
 echo -e "\e[32mCloning and building Aircrack-ng...\e[0m"
 git clone https://github.com/aircrack-ng/aircrack-ng.git
 cd aircrack-ng/
-make sqlite=true
-make sqlite=true install
+autoreconf -i
+./configure --with-experimental --with-ext-scripts
+make 
+make check
+make install
 cd ..
 
 echo -e "\e[32mCloning and building hcxtools...\e[0m"
