@@ -7,7 +7,7 @@ do
 	activeSsid=$(iwgetid -r)
     echo "homeBaseSig: $homeBaseSig"
     echo "activeSsid: $activeSsid"
-    if [ "$activeSsid" != "$homeBaseSsid" ] && [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > 0"|bc -l) )); then
+    if [ "$activeSsid" != "$homeBaseSsid" ] && [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > -70"|bc -l) )); then
         ifdown --force $onboardInterface
         ifup $onboardInterface
         sleep 5
