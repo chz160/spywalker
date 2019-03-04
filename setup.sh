@@ -1,5 +1,9 @@
 #!/bin/bash
-sudo cp -n spywalker.conf.default /ect/default/spywalker.conf
+sudo su
+echo -e "\e[32mCopying conf file to /etc/default directory...\e[0m"
+cp -n spywalker.conf.default /etc/default/spywalker.conf
+
+echo -e "\e[32mSetting execute permission on script files...\e[0m"
 chmod u+x spywalker.sh
 chmod u+x control_loop.sh
 chmod u+x capture_hcxdump.sh
@@ -8,66 +12,63 @@ chmod u+x extract.sh
 chmod u+x move.sh
 chmod u+x online_status.sh
 
-echo "Update APT..."
-sudo apt-get update
-echo "Installing Dependencys..."
-sudo apt-get install -y tmux timeout bc
-sudo apt-get install -y libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver
-sudo apt-get install -y libnl-3-dev libnl-genl-3-dev
-sudo apt-get install -y libcurl4-openssl-dev zlib1g-dev libpcap-dev
+echo -e "\e[32mUpdate ATP...\e[0m"
+apt-get update
+echo -e "\e[32mInstalling Dependencys...\e[0m"
+#For Aircrack
+apt-get install -y \
+    tmux timeout bc build-essential raspberrypi-kernel-headers \
+    libssl-dev subversion iw libnl-dev macchanger sqlite3 libsqlite3-dev reaver \
+    install -y libnl-3-dev libnl-genl-3-dev \
+    libcurl4-openssl-dev zlib1g-dev libpcap-dev \;
 #For GPS
-sudo apt-get install -y gpsd libncurses5-dev libpcap-dev tcpdump libnl-dev gpsd-clients python-gps
+apt-get install -y gpsd libncurses5-dev tcpdump gpsd-clients python-gps
 #For Kismet
-sudo apt-get install -y build-essential git libmicrohttpd-dev pkg-config zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev
-sudo apt-get install -y python python-setuptools python-protobuf python-requests python-pip
-sudo apt-get install -y librtlsdr0 python-usb
-sudo pip install paho-mqtt
-# For GISKismet
-sudo apt-get install libxml-libxml-perl libdbi-perl libdbd-sqlite3-perl
+apt-get install -y \
+    libmicrohttpd-dev pkg-config libcap-dev libnm-dev libdw-dev libprotobuf-dev \
+    libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev
+    python python-setuptools python-protobuf python-requests python-pip \
+    librtlsdr0 python-usb \;
+pip install paho-mqtt
 
-echo "Downloading and building Kismet..."
+echo -e "\e[32mDownloading and building Kismet...\e[0m"
 cd /usr/local/src
-sudo git clone https://github.com/kismetwireless/kismet.git
+git clone https://github.com/kismetwireless/kismet.git
 cd kismet/
-#sudo wget http://www.kismetwireless.net/code/kismet-2016-07-R1.tar.xz
-#sudo tar -xvf kismet-2016-07-R1.tar.xz
-#cd kismet-2016-07-R1/
-sudo ./configure
-#sudo make dep
-sudo make
-sudo make suidinstall
-sudo usermod -aG kismet $USER
+./configure
+make
+make suidinstall
+usermod -aG kismet $USER
 cd ..
 
-echo "Cloning and building Aircrack-ng..."
-sudo git clone https://github.com/aircrack-ng/aircrack-ng.git
+echo -e "\e[32mCloning and building Aircrack-ng...\e[0m"
+git clone https://github.com/aircrack-ng/aircrack-ng.git
 cd aircrack-ng/
-sudo make sqlite=true
-sudo make sqlite=true install
+make sqlite=true
+make sqlite=true install
 cd ..
 
-echo "Cloning and building hcxtools..."
-sudo git clone https://github.com/ZerBea/hcxtools.git
+echo -e "\e[32mCloning and building hcxtools...\e[0m"
+git clone https://github.com/ZerBea/hcxtools.git
 cd hcxtools/
-sudo make
-sudo make install
+make
+make install
 cd ..
 
-echo "Cloning and building hcxdumptools..."
-sudo git clone https://github.com/ZerBea/hcxdumptool.git
+echo -e "\e[32mCloning and building hcxdumptools...\e[0m"
+git clone https://github.com/ZerBea/hcxdumptool.git
 cd hcxdumptool/
-sudo make
-sudo make install
+make
+make install
 cd ..
 
-echo "Cloning and building driver for rtl8188eus drivers..."
-sudo apt-get install raspberrypi-kernel-headers
-sudo git clone https://github.com/kimocoder/rtl8188eus.git
+echo -e "\e[32mCloning and building driver for rtl8188eus drivers...\e[0m"
+git clone https://github.com/kimocoder/rtl8188eus.git
 cd rtl8188eus
-sudo cp realtek_blacklist.conf /etc/modprobe.d/
-sudo make
-sudo make install
-sudo rmmod 8188eu && insmod 8188eu.ko
+cp realtek_blacklist.conf /etc/modprobe.d/
+make
+make install
+rmmod 8188eu && insmod 8188eu.ko
 cd ..
 
 # echo ""
@@ -98,10 +99,11 @@ cd ..
 # depmod -a
 # exit
 
-sudo rm -rf hcxdumptool hcxtools aircrack-ng kismet rtl8188eus # cleaning up
+echo -e "\e[32mCleaning up source directory...\e[0m"
+rm -rf hcxdumptool hcxtools aircrack-ng kismet rtl8188eus # cleaning up
 cd ~
 
-sudo airodump-ng-oui-update
+airodump-ng-oui-update
 #cd scripts
 #chmod +x airmon-ng
 #cp airmon-ng /usr/bin/airmon-ng
@@ -110,10 +112,10 @@ sudo airodump-ng-oui-update
 # sudo svn co http://svn.aircrack-ng.org/branch/airoscript-ng/ airoscript-ng
 # cd airoscript-ng
 # sudo make
-
 cd ~/
 
 wget -O manuf "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf"
-sudo cp manuf /etc/
+cp manuf /etc/
 
 echo "done"
+exit
