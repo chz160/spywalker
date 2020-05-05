@@ -21,9 +21,14 @@ do
         
         #ifdown --force $onboardInterface
         #ifup $onboardInterface
-
-        sudo ip link set $onboardInterface down
-        sudo ip link set $onboardInterface up
+        try (
+            sudo ip link set $onboardInterface down
+            sudo ip link set $onboardInterface up
+         ) 
+         catch || {
+            echo "An error occured while trying to connect to home base. $($ex_code)"
+         }
+        
         #sudo wpa_supplicant -B -$onboardInterface -c /etc/wpa_supplicant.conf -Dnl80211,wext
         #sudo dhclient $onboardInterface
 

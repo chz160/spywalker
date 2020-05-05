@@ -14,6 +14,8 @@ homeBaseSigThreshold=-40
 echo "Killing troublesome processes..."
 sudo airmon-ng check kill
 
+sleep 30s
+
 while [ keeplooping ]
 do
 	echo "Collecting data..."
