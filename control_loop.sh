@@ -14,6 +14,7 @@ homeBaseSigThreshold=-40
 echo "Killing troublesome processes..."
 sudo airmon-ng check kill
 
+echo "Waiting for online status checking to spin up..."
 sleep 30s
 
 while [ keeplooping ]
