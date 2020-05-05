@@ -19,13 +19,13 @@ do
         # from the main control loop if the homeBaseSsid
         # is in range and we are not connected to it.
         
-        ifdown --force $onboardInterface
-        ifup $onboardInterface
+        #ifdown --force $onboardInterface
+        #ifup $onboardInterface
 
-        # sudo ip link set $onboardInterface down
-        # sudo ip link set $onboardInterface up
-        # sudo wpa_supplicant -B -$onboardInterface -c /etc/wpa_supplicant.conf -Dnl80211,wext
-        # sudo dhclient $onboardInterface
+        sudo ip link set $onboardInterface down
+        sudo ip link set $onboardInterface up
+        #sudo wpa_supplicant -B -$onboardInterface -c /etc/wpa_supplicant.conf -Dnl80211,wext
+        #sudo dhclient $onboardInterface
 
         # or maybe...
         # wpa_supplicant -B -i $onboardInterface -c <(wpa_passphrase "Your_SSID" Your_passphrase) && dhclient $onboardInterface
