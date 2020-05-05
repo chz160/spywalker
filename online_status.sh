@@ -4,8 +4,7 @@
 echo "Checking for home base network..."
 while true
 do
-    #homeBaseSig=$( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
-    read $homeBaseSig <<< $( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
+    $homeBaseSig=$( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
     put "homeBaseSig" "$homeBaseSig"
 	activeSsid=$(iwgetid -r)
     echo "homeBaseSig: $homeBaseSig"
@@ -21,13 +20,13 @@ do
         
         #ifdown --force $onboardInterface
         #ifup $onboardInterface
-        try (
-            sudo ip link set $onboardInterface down
-            sudo ip link set $onboardInterface up
-         ) 
-         catch || {
-            echo "An error occured while trying to connect to home base. $($ex_code)"
-         }
+        # try (
+        #     sudo ip link set $onboardInterface down
+        #     sudo ip link set $onboardInterface up
+        #  ) 
+        #  catch || {
+        #     echo "An error occured while trying to connect to home base. $($ex_code)"
+        #  }
         
         #sudo wpa_supplicant -B -$onboardInterface -c /etc/wpa_supplicant.conf -Dnl80211,wext
         #sudo dhclient $onboardInterface
@@ -46,7 +45,7 @@ do
         #     set_network 0 ssid "SSID_here" \; \
         #     set_network 0 psk "Passphrase_here" \;
 
-        sleep 5
+        sleep 5s
         activeSsid=$(iwgetid -r)
         put activeSsid "$activeSsid"
     fi
@@ -58,5 +57,5 @@ do
         echo "Disconnected from homebase wifi."
         put offline "true"
     fi
-    sleep 10
+    sleep 10s
 done

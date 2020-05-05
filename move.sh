@@ -20,7 +20,7 @@ while [ "$offline" == true ] && [ "$activeSsid" != "$homeBaseSsid" ]; do
         #if [[ $? -eq 0 ]]; then
         #        offline=false;
         #else
-                sleep 1
+                sleep 1s
                 offline=get "offline"
                 activeSsid=get "activeSsid"
         #fi

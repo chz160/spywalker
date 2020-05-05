@@ -64,6 +64,6 @@ do
 		tmux send-keys -t walk.4 "cd $workingDir" C-m
 		tmux send-keys -t walk.4 "./move.sh $dirName" C-m
 	fi
-	sleep 30
+	sleep 30s
 done
 echo All done
