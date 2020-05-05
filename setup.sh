@@ -1,7 +1,11 @@
 #!/bin/bash
 sudo su
-echo -e "\e[32mCopying conf file to /etc/default directory...\e[0m"
-cp -n spywalker.conf.default /etc/default/spywalker.conf
+if [ -f "/etc/default/spywalker.conf"]; then
+    echo -e "\e[32mConf file already exists in /etc/default directory.\e[0m"
+else
+    echo -e "\e[32mCopying conf file to /etc/default directory...\e[0m"
+    cp -n spywalker.conf.default /etc/default/spywalker.conf
+fi
 
 echo -e "\e[32mSetting execute permission on script files...\e[0m"
 chmod u+x spywalker.sh
@@ -12,7 +16,7 @@ chmod u+x extract.sh
 chmod u+x move.sh
 chmod u+x online_status.sh
 
-echo -e "\e[32mUpdate ATP...\e[0m"
+echo -e "\e[32mUpdate APT...\e[0m"
 apt-get update
 echo -e "\e[32mInstalling Dependencys...\e[0m"
 #For Aircrack
@@ -71,11 +75,10 @@ make install
 cd ..
 
 echo -e "\e[32mCloning and building driver for rtl8188eus drivers...\e[0m"
-git clone https://github.com/kimocoder/rtl8188eus.git
+git clone https://github.com/aircrack-ng/rtl8188eus.git
 cd rtl8188eus
-cp realtek_blacklist.conf /etc/modprobe.d/
-make
-make install
+echo "blacklist r8188eu" > "/etc/modprobe.d/realtek.conf"
+make && make install
 rmmod 8188eu && insmod 8188eu.ko
 cd ..
 

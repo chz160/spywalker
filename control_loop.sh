@@ -1,5 +1,6 @@
 #!/bin/bash
 . /etc/default/spywalker.conf
+. common.sh
 #homeBaseSsid=$1
 #workingDir=$2
 #extractedFilesDestination=$3
@@ -16,7 +17,8 @@ sudo airmon-ng check kill
 while [ keeplooping ]
 do
 	echo "Collecting data..."
-	read homeBaseSig <<< $( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
+	homeBaseSig=get "homeBaseSig"
+	#read homeBaseSig <<< $( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
 	if [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > $homeBaseSigThreshold"|bc -l) )); then
 		if [ "$homeBaseInRange" == false  ]; then
 			arrivingAtHomeBase=true;
@@ -29,7 +31,7 @@ do
 		if [ "$homeBaseInRange" == true  ]; then
 			leavingHomeBase=true;
 		else
-				leavingHomeBase=false;
+			leavingHomeBase=false;
 		fi
 		arrivingAtHomeBase=false;
 		homeBaseInRange=false

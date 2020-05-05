@@ -32,6 +32,15 @@ if [ "$onboardInterface" == "$hcxdumpInterface" ] ||
 	echo "For spywalker to work correctly you must have 3 seperate wireless interfaces, and they must be configured in $confDir. onboardInterface, hcxdumpInterface, and kismetInterface must all be different interfaces." 1>&2
 	exit 1
 fi
+. common.sh
+##############################
+# GLOBAL VARIABLES
+##############################
+put homeBaseSig ""
+put offline "true"
+put activeSsid ""
+##############################
+
 session=walk
 window=${session}:0
 pane1=${window}.0
