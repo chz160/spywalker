@@ -5,8 +5,9 @@ echo "Checking for home base network..."
 while true
 do
     homeBaseSig=$( sudo iw $onboardInterface scan | egrep "SSID|signal" | egrep -B1 "$homeBaseSsid" | egrep -o "[0-9\.\-]+")
-    put "homeBaseSig" "$homeBaseSig"
+    put homeBaseSig "$homeBaseSig"
 	activeSsid=$(iwgetid -r)
+    put activeSsid "$activeSsid"
     echo "homeBaseSig: $homeBaseSig"
     echo "activeSsid: $activeSsid"
     if [ "$activeSsid" != "$homeBaseSsid" ] && [ "$homeBaseSig" != "" ] && (( $(echo "$homeBaseSig > -70"|bc -l) )); then

@@ -11,8 +11,8 @@ fi
 echo "Checking for home base network..."
 #ssid=""
 #offline=true
-offline=get "offline"
-activeSsid=get "activeSsid"
+offline=$(get offline)
+activeSsid=$(get activeSsid)
 while [ "$offline" == true ] && [ "$activeSsid" != "$homeBaseSsid" ]; do
 #while [ "$offline" == true ]; do
 	#ssid=$(iwgetid -r)
@@ -21,8 +21,8 @@ while [ "$offline" == true ] && [ "$activeSsid" != "$homeBaseSsid" ]; do
         #        offline=false;
         #else
                 sleep 1s
-                offline=get "offline"
-                activeSsid=get "activeSsid"
+                offline=$(get offline)
+                activeSsid=$(get activeSsid)
         #fi
 done
 
