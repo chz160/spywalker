@@ -29,7 +29,13 @@ apt-get install -y \
     hostapd tcpdump screen    
 
 #For GPS
-apt-get install -y gpsd libncurses5-dev gpsd-clients python-gps
+apt-get install -y gpsd libncurses5-dev gpsd-clients python-gps ntp
+echo "# gps ntp" >> "/etc/ntp.conf"
+echo "server 127.127.28.0 minpoll 4" >> "/etc/ntp.conf"
+echo "fudge  127.127.28.0 time1 0.183 refid NMEA" >> "/etc/ntp.conf"
+echo "server 127.127.28.1 minpoll 4 prefer" >> "/etc/ntp.conf"
+echo "fudge  127.127.28.1 refid PPS" >> "/etc/ntp.conf"
+service ntp restart
 
 #For Kismet
 apt-get install -y \
@@ -77,7 +83,7 @@ cd ..
 echo -e "\e[32mCloning and building driver for rtl8188eus drivers...\e[0m"
 git clone https://github.com/aircrack-ng/rtl8188eus.git
 cd rtl8188eus
-echo "blacklist r8188eu" > "/etc/modprobe.d/realtek.conf"
+echo "blacklist r8188eu" >> "/etc/modprobe.d/realtek.conf"
 make && make install
 rmmod 8188eu && insmod 8188eu.ko
 cd ..
