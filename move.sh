@@ -26,7 +26,7 @@ while [ "$offline" == true ] && [ "$activeSsid" != "$homeBaseSsid" ]; do
         #fi
 done
 
-echo "Mounting network location..."
+echo "Mounting network location $extractedFilesDestination..."
 sudo mount -a
 if test ! -d "$extractedFilesDestination"; then
         sudo mkdir $extractedFilesDestination        
