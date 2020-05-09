@@ -36,19 +36,23 @@ echo "fudge  127.127.28.0 time1 0.183 refid NMEA" >> "/etc/ntp.conf"
 echo "server 127.127.28.1 minpoll 4 prefer" >> "/etc/ntp.conf"
 echo "fudge  127.127.28.1 refid PPS" >> "/etc/ntp.conf"
 service ntp restart
+dpkg-reconfigure gpsd
 
 #For Kismet
 apt-get install -y \
-    libmicrohttpd-dev libcap-dev libnm-dev libdw-dev \
-    libprotobuf-dev libprotobuf-c-dev protobuf-compiler \
-    protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev python \
-    python-setuptools python-protobuf python-requests python-pip \
-    librtlsdr0 python-usb;
+    build-essential git libmicrohttpd-dev pkg-config zlib1g-dev \
+    libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev libnm-dev \
+    libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev \
+    protobuf-compiler protobuf-c-compiler libsensors4-dev \
+    libusb-1.0-0-dev python3 python3-setuptools python3-protobuf \
+    python3-requests python3-numpy python3-serial python3-usb \
+    python3-dev librtlsdr0 libubertooth-dev libbtbb-dev;
+
 pip install paho-mqtt
 
 echo -e "\e[32mDownloading and building Kismet...\e[0m"
 cd /usr/local/src
-git clone https://github.com/kismetwireless/kismet.git
+git clone https://github.com/kismetwireless/kismet.git -b "kismet-2020-04-R3"
 cd kismet/
 ./configure
 make
