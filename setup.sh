@@ -1,5 +1,9 @@
 #!/bin/bash
-sudo su
+if [[ `id -u` -ne 0 ]] ; then 
+    echo "Please run as root/sudo."; 
+    exit 1 ; 
+fi
+
 if [ -f "/etc/default/spywalker.conf"]; then
     echo -e "\e[32mConf file already exists in /etc/default directory.\e[0m"
 else
