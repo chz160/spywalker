@@ -59,8 +59,7 @@ cd /usr/local/src
 git clone https://github.com/kismetwireless/kismet.git -b "kismet-2020-04-R3"
 cd kismet/
 ./configure
-make
-make suidinstall
+make && make suidinstall
 usermod -aG kismet $USER
 cd ..
 
@@ -69,23 +68,19 @@ git clone https://github.com/aircrack-ng/aircrack-ng.git
 cd aircrack-ng/
 autoreconf -i
 ./configure --with-experimental --with-ext-scripts
-make 
-make check
-make install
+make && make check && make install
 cd ..
 
 echo -e "\e[32mCloning and building hcxtools...\e[0m"
 git clone https://github.com/ZerBea/hcxtools.git
 cd hcxtools/
-make
-make install
+make && make install
 cd ..
 
 echo -e "\e[32mCloning and building hcxdumptools...\e[0m"
 git clone https://github.com/ZerBea/hcxdumptool.git
 cd hcxdumptool/
-make
-make install
+make && make install
 cd ..
 
 echo -e "\e[32mCloning and building driver for rtl8188eus drivers...\e[0m"
