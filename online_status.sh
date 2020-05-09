@@ -24,7 +24,7 @@ do
 
         sudo ip link set $onboardInterface down
         sudo ip link set $onboardInterface up
-        sudo wpa_supplicant -B -i$onboardInterface -c /etc/wpa_supplicant/wpa_supplicant.conf -Dnl80211,wext
+        sudo wpa_supplicant -B -$onboardInterface -c /etc/wpa_supplicant/wpa_supplicant.conf -Dnl80211,wext
         sudo dhclient $onboardInterface
         
         # or maybe...
